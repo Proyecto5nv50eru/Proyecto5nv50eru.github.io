@@ -1,0 +1,19 @@
+<!-- session.html -->
+<div id="userProfile">
+  <img id="userPhoto" src="" alt="User Photo">
+  <p id="userName"></p>
+  <p id="userEmail"></p>
+  <p id="userTwitter"></p>
+  <p id="userRole"></p>
+</div>
+
+<script>
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    document.getElementById('userPhoto').src = user.photoURL;
+    document.getElementById('userName').innerText = user.displayName;
+    document.getElementById('userEmail').innerText = user.email;
+    // Aquí necesitarás obtener el Twitter y el rol del usuario desde Firebase
+  }
+});
+</script>
