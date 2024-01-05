@@ -76,7 +76,12 @@ auth.getRedirectResult().then((result) => {
     var token = result.credential.accessToken;
     // La información del usuario de Twitter se puede recuperar con result.additionalUserInfo.username
     // @ts-ignore Muestra el nombre de usuario de Twitter.
-    twitter.value = result.additionalUserInfo.username;
+    if (result.additionalUserInfo.username) {
+      twitter.value = result.additionalUserInfo.username;
+    } else {
+      // Si el nombre de usuario de Twitter es undefined, vuelve a llamar a la autenticación de Twitter.
+      auth.currentUser.linkWithRedirect(providerTwitter);
+    }
   }
 }).catch((error) => {
   // Maneja los errores aquí.
@@ -105,6 +110,7 @@ function procesaError(e) {
   console.log(e);
   alert(e.message);
 }
+
 
     </script>
   </body>
