@@ -1,0 +1,26 @@
+<!-- añadirRegistro.html -->
+<div id="añadirRegistro">
+  <input id="fecha" type="date">
+  <input id="nombreProducto" type="text" placeholder="Nombre del producto">
+  <input id="costoProducto" type="number" placeholder="Costo del producto">
+  <input id="nombreComprador" type="text" placeholder="Nombre del comprador">
+  <button onclick="añadirRegistro()">Añadir registro</button>
+</div>
+
+<script>
+function añadirRegistro() {
+  var fecha = document.getElementById('fecha').value;
+  var nombreProducto = document.getElementById('nombreProducto').value;
+  var costoProducto = document.getElementById('costoProducto').value;
+  var nombreComprador = document.getElementById('nombreComprador').value;
+  var nombreVendedor = firebase.auth().currentUser.displayName;
+
+  firebase.firestore().collection('registros').add({
+    fecha: fecha,
+    nombreProducto: nombreProducto,
+    costoProducto: costoProducto,
+    nombreComprador: nombreComprador,
+    nombreVendedor: nombreVendedor
+  });
+}
+</script>
