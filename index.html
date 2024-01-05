@@ -14,6 +14,8 @@
 </head>
 <body>
   <h1>REGISTROS</h1>
+  <button onclick="signInWithGoogle()">Iniciar sesión con Google</button>
+  <button onclick="signInWithTwitter()">Iniciar sesión con Twitter</button>
   <div id="menu">
     <button onclick="changeTab('sesion')">Sesión</button>
     <button onclick="changeTab('registros')">Registros</button>
@@ -25,6 +27,7 @@
   <div id="añadirRegistro" class="tab"></div>
   <div id="vendedores" class="tab"></div>
 
+  <script src="init.js"></script>
   <script>
   function changeTab(tabId) {
     var tabs = document.getElementsByClassName('tab');
@@ -36,3 +39,4 @@
   </script>
 </body>
 </html>
+
