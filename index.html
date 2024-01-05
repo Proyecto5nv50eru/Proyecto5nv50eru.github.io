@@ -24,22 +24,18 @@
       <legend>Nombre</legend>
       <output id="nombre"></output>
     </fieldset>
-    <fieldset>
-      <legend>Twitter</legend>
-      <output id="twitter"></output>
-    </fieldset>
     <figure><img id="avatar" alt="Avatar"></figure>
     <button type="button" onclick="terminaSesión()">Terminar Sesión</button>
-    <footer>Copyright © 2023 Rodriguez Urbina Edwin.</footer>
+    <footer>Copyright &copy; 2023 Rodriguez Urbina Edwin.</footer>
     <script>
       //@ts-check
       /** Conexión al sistema de autenticación de Firebase. */
       // @ts-ignore
       const auth = firebase.auth();
-      /** Tipo de autenticación de usuarios. En este caso es con Twitter. */
+      /** Tipo de autenticación de usuarios. En este caso es con Google. */
       // @ts-ignore
-      const provider = new firebase.auth.TwitterAuthProvider();
-      /* Configura el proveedor de Twitter para que permita seleccionar de una
+      const provider = new firebase.auth.GoogleAuthProvider();
+      /* Configura el proveedor de Google para que permita seleccionar de una
        * lista. */
       provider.setCustomParameters({ prompt: "select_account" });
       /* Recibe una función que se invoca cada que hay un cambio en la
@@ -50,14 +46,12 @@
         usuarioAuth => {
           if (usuarioAuth && usuarioAuth.email) {
             // Usuario aceptado.
-            // @ts-ignore Muestra el email registrado en Twitter.
+            // @ts-ignore Muestra el email registrado en Google.
             email.value = usuarioAuth.email;
-            // @ts-ignore Muestra el nombre registrado en Twitter.
+            // @ts-ignore Muestra el nombre registrado en Google.
             nombre.value = usuarioAuth.displayName;
-            // @ts-ignore Muestra el avatar registrado en Twitter.
+            // @ts-ignore Muestra el avatar registrado en Google.
             avatar.src = usuarioAuth.photoURL;
-            // @ts-ignore Muestra la dirección de Twitter del usuario.
-            twitter.value = usuarioAuth.providerData[0].uid;
           } else {
             // No ha iniciado sesión. Pide datos para iniciar sesión.
             auth.signInWithRedirect(provider);
