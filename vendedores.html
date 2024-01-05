@@ -1,0 +1,32 @@
+<!-- vendedores.html -->
+<div id="vendedores">
+  <!-- Aquí se mostrarán los vendedores -->
+</div>
+<div id="añadirVendedor">
+  <input id="correoVendedor" type="email" placeholder="Correo del vendedor">
+  <input id="nombreVendedor" type="text" placeholder="Nombre del vendedor">
+  <button onclick="añadirVendedor()">Añadir vendedor</button>
+</div>
+
+<script>
+// Recupera los vendedores de Firebase y los muestra en la página
+firebase.firestore().collection('vendedores').get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    var vendedor = doc.data();
+    // Crea un elemento para cada vendedor y añádelo a la página
+    var vendedorElement = document.createElement('div');
+    vendedorElement.innerText = vendedor.nombre + ', ' + vendedor.correo;
+    document.getElementById('vendedores').appendChild(vendedorElement);
+  });
+});
+
+function añadirVendedor() {
+  var correoVendedor = document.getElementById('correoVendedor').value;
+  var nombreVendedor = document.getElementById('nombreVendedor').value;
+
+  firebase.firestore().collection('vendedores').add({
+    correo: correoVendedor,
+    nombre: nombreVendedor
+  });
+}
+</script>
