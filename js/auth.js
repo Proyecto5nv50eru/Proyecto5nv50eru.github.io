@@ -65,6 +65,8 @@ auth.getRedirectResult().then((result) => {
 async function terminaSesión() {
   try {
     await auth.signOut();
+    // Redirige al usuario a la página de confirmación de cierre de sesión.
+    window.location.href = "sesionC.html";
   } catch (e) {
     procesaError(e);
   }
