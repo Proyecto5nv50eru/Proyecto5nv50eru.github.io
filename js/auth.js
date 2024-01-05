@@ -65,10 +65,17 @@ auth.getRedirectResult().then((result) => {
 async function terminaSesión() {
   try {
     await auth.signOut();
+    // Elimina las cookies de Google.
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
   } catch (e) {
     procesaError(e);
   }
 }
+
 
 /** Procesa un error. Muestra el objeto en la consola y un cuadro de
  * alerta con el mensaje.
