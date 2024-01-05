@@ -1,0 +1,38 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registros</title>
+  <style>
+    .tab {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>REGISTROS</h1>
+  <div id="menu">
+    <button onclick="changeTab('sesion')">Sesión</button>
+    <button onclick="changeTab('registros')">Registros</button>
+    <button onclick="changeTab('añadirRegistro')">Añadir registros</button>
+    <button onclick="changeTab('vendedores')">Vendedores</button>
+  </div>
+  <div id="sesion" class="tab"></div>
+  <div id="registros" class="tab"></div>
+  <div id="añadirRegistro" class="tab"></div>
+  <div id="vendedores" class="tab"></div>
+
+  <script>
+  function changeTab(tabId) {
+    var tabs = document.getElementsByClassName('tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].style.display = 'none';
+    }
+    document.getElementById(tabId).style.display = 'block';
+  }
+  </script>
+</body>
+</html>
