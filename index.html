@@ -6,11 +6,10 @@
     <title>Autenticación</title>
     <link rel="stylesheet" href="estilos.css">
 
-   <!-- Carga el núcleo de Firebase JS SDK -->
+    <!-- Carga el núcleo de Firebase JS SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <!-- Agrega el manejo de autenticación. -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js">
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="js/init.js"></script>
   </head>
   <body>
@@ -24,11 +23,15 @@
       <legend>Nombre</legend>
       <output id="nombre"></output>
     </fieldset>
+    <fieldset>
+      <legend>Twitter</legend>
+      <output id="twitter"></output>
+    </fieldset>
     <figure><img id="avatar" alt="Avatar"></figure>
     <button type="button" onclick="terminaSesión()">Terminar Sesión</button>
-    <footer>Copyright &copy; 2023 Rodriguez Urbina Edwin.</footer>
+    <footer>Copyright © 2023 Rodriguez Urbina Edwin.</footer>
     <script>
-      /** Conexión al sistema de autenticación de Firebase. */
+/** Conexión al sistema de autenticación de Firebase. */
 // @ts-ignore
 const auth = firebase.auth();
 /** Tipo de autenticación de usuarios. En este caso es con Google. */
@@ -102,6 +105,7 @@ function procesaError(e) {
   console.log(e);
   alert(e.message);
 }
+
     </script>
   </body>
 </html>
