@@ -1,0 +1,17 @@
+<!-- registros.html -->
+<div id="registros">
+  <!-- Aquí se mostrarán los registros -->
+</div>
+
+<script>
+// Recupera los registros de Firebase y los muestra en la página
+firebase.firestore().collection('registros').get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    var registro = doc.data();
+    // Crea un elemento para cada registro y añádelo a la página
+    var registroElement = document.createElement('div');
+    registroElement.innerText = registro.nombreProducto + ', ' + registro.costoProducto + ', ' + registro.nombreComprador + ', ' + registro.nombreVendedor;
+    document.getElementById('registros').appendChild(registroElement);
+  });
+});
+</script>
