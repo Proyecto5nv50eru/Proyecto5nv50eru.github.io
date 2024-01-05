@@ -12,27 +12,19 @@ provider.setCustomParameters({ prompt: "select_account" });
 // @ts-ignore
 const providerTwitter = new firebase.auth.TwitterAuthProvider();
 
-/* Recibe una función que se invoca cada que hay un cambio en la
- * autenticación y recibe el modelo con las características del usuario.*/
 auth.onAuthStateChanged(
   /** Recibe las características del usuario o null si no ha iniciado
    * sesión. */
   usuarioAuth => {
     if (usuarioAuth && usuarioAuth.email) {
-      // Muestra la información del usuario registrado en Google.
+  registrado en Google.
       email.value = usuarioAuth.email;
+   registrado en Google.
       nombre.value = usuarioAuth.displayName;
+     registrado en Google.
       avatar.src = usuarioAuth.photoURL;
   
-      // Obtiene la información del proveedor de Twitter.
-      const providerData = usuarioAuth.providerData;
-      for (let i = 0; i < providerData.length; i++) {
-        if (providerData[i].providerId === firebase.auth.TwitterAuthProvider.PROVIDER_ID) {
-          // Muestra el nombre de usuario de Twitter.
-          twitter.value = providerData[i].displayName;
-          break;
-        }
-      }
+      auth.currentUser.linkWithRedirect(providerTwitter);
     } else {
       // No ha iniciado sesión. Pide datos para iniciar sesión.
       auth.signInWithRedirect(provider);
@@ -41,7 +33,6 @@ auth.onAuthStateChanged(
   // Función que se invoca si hay un error al verificar el usuario.
   procesaError
 );
-
 
 auth.getRedirectResult().then((result) => {
   if (result.credential) {
@@ -71,21 +62,12 @@ auth.getRedirectResult().then((result) => {
 async function terminaSesión() {
   try {
     await auth.signOut();
-    // Elimina las cookies de Google.
-    document.cookie.split(";").forEach((c) => {
-      document.cookie = c
-        .replace(/^ +/, "")
-        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-    });
   } catch (e) {
     procesaError(e);
   }
 }
 
-
 /** Procesa un error. Muestra el objeto en la consola y un cuadro de
- * alerta con el mensaje.
- * @param {Error} e descripción del error. */
 function procesaError(e) {
   console.log(e);
   alert(e.message);
