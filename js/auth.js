@@ -19,15 +19,20 @@ auth.onAuthStateChanged(
    * sesión. */
   usuarioAuth => {
     if (usuarioAuth && usuarioAuth.email) {
-      // Usuario aceptado.
-      // @ts-ignore Muestra el email registrado en Google.
+      // Muestra la información del usuario registrado en Google.
       email.value = usuarioAuth.email;
-      // @ts-ignore Muestra el nombre registrado en Google.
       nombre.value = usuarioAuth.displayName;
-      // @ts-ignore Muestra el avatar registrado en Google.
       avatar.src = usuarioAuth.photoURL;
-      // Vincula la cuenta de Twitter con la de Google.
-      auth.currentUser.linkWithRedirect(providerTwitter);
+  
+      // Obtiene la información del proveedor de Twitter.
+      const providerData = usuarioAuth.providerData;
+      for (let i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === firebase.auth.TwitterAuthProvider.PROVIDER_ID) {
+          // Muestra el nombre de usuario de Twitter.
+          twitter.value = providerData[i].displayName;
+          break;
+        }
+      }
     } else {
       // No ha iniciado sesión. Pide datos para iniciar sesión.
       auth.signInWithRedirect(provider);
@@ -36,6 +41,7 @@ auth.onAuthStateChanged(
   // Función que se invoca si hay un error al verificar el usuario.
   procesaError
 );
+
 
 auth.getRedirectResult().then((result) => {
   if (result.credential) {
