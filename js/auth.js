@@ -93,8 +93,6 @@ auth.onAuthStateChanged(
 async function terminaSesión() {
   try {
     await auth.signOut();
-    // Redirige al usuario a la página de cierre de sesión de Twitter.
-    window.location.href = 'https://twitter.com/logout';
   } catch (e) {
     procesaError(e);
   }
