@@ -4,7 +4,7 @@ const registrosRef = firebase.firestore().collection("registros");
 // Función para agregar un registro
 function agregarRegistro() {
   // Obtiene los valores de los campos
-  const fecha = prompt("Ingrese la fecha (formato: DD/MM/AAAA):");
+  const fecha = new Date(prompt("Ingrese la fecha (formato: DD/MM/AAAA):"));
   const producto = prompt("Ingrese el nombre del producto vendido:");
   const costo = prompt("Ingrese el costo del producto:");
   const comprador = prompt("Ingrese el nombre del comprador:");
@@ -74,16 +74,20 @@ registrosRef.onSnapshot((snapshot) => {
 
   // Recorre cada registro
   snapshot.forEach((doc) => {
-    // Obtiene los datos del registro
-    const registro = doc.data();
+  // Obtiene los datos del registro
+  const registro = doc.data();
 
-    // Crea un elemento de lista para el registro
-    const registroItem = document.createElement("li");
-    registroItem.textContent = `ID: ${doc.id}, ${registro.fecha} - ${registro.producto} - $${registro.costo} - ${registro.comprador} - ${registro.vendedor}`;
+  // Convierte la fecha a una cadena legible
+  const fecha = registro.fecha.toDate().toLocaleDateString();
 
-    // Agrega el registro a la lista
-    registrosList.appendChild(registroItem);
-  });
+  // Crea un elemento de lista para el registro
+  const registroItem = document.createElement("li");
+  registroItem.textContent = `ID: ${doc.id}, ${fecha} - ${registro.producto} - $${registro.costo} - ${registro.comprador} - ${registro.vendedor}`;
+
+  // Agrega el registro a la lista
+  registrosList.appendChild(registroItem);
+});
+
 });
 
 
