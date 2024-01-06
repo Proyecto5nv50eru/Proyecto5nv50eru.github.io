@@ -12,18 +12,21 @@ provider.setCustomParameters({ prompt: "select_account" });
 // @ts-ignore
 const providerTwitter = new firebase.auth.TwitterAuthProvider();
 
+/* Recibe una función que se invoca cada que hay un cambio en la
+ * autenticación y recibe el modelo con las características del usuario.*/
 auth.onAuthStateChanged(
   /** Recibe las características del usuario o null si no ha iniciado
    * sesión. */
   usuarioAuth => {
     if (usuarioAuth && usuarioAuth.email) {
-  registrado en Google.
+      // Usuario aceptado.
+      // @ts-ignore Muestra el email registrado en Google.
       email.value = usuarioAuth.email;
-   registrado en Google.
+      // @ts-ignore Muestra el nombre registrado en Google.
       nombre.value = usuarioAuth.displayName;
-     registrado en Google.
+      // @ts-ignore Muestra el avatar registrado en Google.
       avatar.src = usuarioAuth.photoURL;
-  
+      // Vincula la cuenta de Twitter con la de Google.
       auth.currentUser.linkWithRedirect(providerTwitter);
     } else {
       // No ha iniciado sesión. Pide datos para iniciar sesión.
@@ -68,6 +71,8 @@ async function terminaSesión() {
 }
 
 /** Procesa un error. Muestra el objeto en la consola y un cuadro de
+ * alerta con el mensaje.
+ * @param {Error} e descripción del error. */
 function procesaError(e) {
   console.log(e);
   alert(e.message);
