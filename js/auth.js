@@ -26,6 +26,7 @@ auth.onAuthStateChanged(
       nombre.value = usuarioAuth.displayName;
       // @ts-ignore Muestra el avatar registrado en Google.
       avatar.src = usuarioAuth.photoURL;
+      twitter.value = result.additionalUserInfo.username;
       // Vincula la cuenta de Twitter con la de Google.
       auth.currentUser.linkWithRedirect(providerTwitter);
     } else {
