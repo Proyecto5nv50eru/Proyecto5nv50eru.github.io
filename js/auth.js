@@ -37,18 +37,10 @@ auth.onAuthStateChanged(
   procesaError
 );
 
-auth.getRedirectResult().then((result) => {
-  if (result.credential) {
-    // Esta da acceso al token de acceso de Twitter.
-    var token = result.credential.accessToken;
-    // La información del usuario de Twitter se puede recuperar con result.additionalUserInfo.username
-    // @ts-ignore Muestra el nombre de usuario de Twitter.
-    if (result.additionalUserInfo.username && result.additionalUserInfo.username.trim() !== "") {
-      twitter.value = result.additionalUserInfo.username;
-    } else {
-      // Si el nombre de usuario de Twitter es undefined o está vacío, vuelve a llamar a la autenticación de Twitter.
-      auth.currentUser.linkWithRedirect(providerTwitter);
-    }
+auth.currentUser.linkWithPopup(providerTwitter).then((result) => {
+  // Puedes acceder a la información del usuario de Twitter aquí.
+  if (result.additionalUserInfo.username && result.additionalUserInfo.username.trim() !== "") {
+    twitter.value = result.additionalUserInfo.username;
   }
 }).catch((error) => {
   // Maneja los errores aquí.
@@ -60,6 +52,7 @@ auth.getRedirectResult().then((result) => {
   var credential = error.credential;
   // ...
 });
+
 
 /** Termina la sesión. */
 async function terminaSesión() {
