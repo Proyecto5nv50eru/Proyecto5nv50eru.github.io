@@ -21,10 +21,27 @@ function agregarRegistro() {
 
   // Agrega el registro a la base de datos
   registrosRef.add(registro);
-
-  // Agrega el registro a la lista
-  const registrosList = document.getElementById("registros");
-  const registroItem = document.createElement("li");
-  registroItem.textContent = `${fecha} - ${producto} - $${costo} - ${comprador} - ${vendedor}`;
-  registrosList.appendChild(registroItem);
 }
+
+// Escucha los cambios en la colección
+registrosRef.onSnapshot((snapshot) => {
+  // Obtiene la lista de registros
+  const registrosList = document.getElementById("registros");
+
+  // Limpia la lista
+  registrosList.innerHTML = '';
+
+  // Recorre cada registro
+  snapshot.forEach((doc) => {
+    // Obtiene los datos del registro
+    const registro = doc.data();
+
+    // Crea un elemento de lista para el registro
+    const registroItem = document.createElement("li");
+    registroItem.textContent = `${registro.fecha} - ${registro.producto} - $${registro.costo} - ${registro.comprador} - ${registro.vendedor}`;
+
+    // Agrega el registro a la lista
+    registrosList.appendChild(registroItem);
+  });
+});
+
