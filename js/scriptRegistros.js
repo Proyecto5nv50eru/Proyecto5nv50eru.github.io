@@ -79,10 +79,11 @@ registrosRef.onSnapshot((snapshot) => {
 
     // Crea un elemento de lista para el registro
     const registroItem = document.createElement("li");
-    registroItem.textContent = `${registro.fecha} - ${registro.producto} - $${registro.costo} - ${registro.comprador} - ${registro.vendedor}`;
+    registroItem.textContent = `ID: ${doc.id}, ${registro.fecha} - ${registro.producto} - $${registro.costo} - ${registro.comprador} - ${registro.vendedor}`;
 
     // Agrega el registro a la lista
     registrosList.appendChild(registroItem);
   });
 });
+
 
