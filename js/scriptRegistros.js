@@ -41,7 +41,7 @@ function editarRegistro() {
   const id = prompt("Ingrese el ID del registro que desea editar:");
 
   // Pide al usuario los nuevos datos del registro
-  const fecha = prompt("Ingrese la nueva fecha (formato: DD/MM/AAAA):");
+  const fecha = new Date(prompt("Ingrese la fecha (formato: DD/MM/AAAA):"));
   const producto = prompt("Ingrese el nuevo nombre del producto vendido:");
   const costo = prompt("Ingrese el nuevo costo del producto:");
   const comprador = prompt("Ingrese el nuevo nombre del comprador:");
