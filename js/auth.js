@@ -45,6 +45,8 @@ auth.getRedirectResult().then((result) => {
     // @ts-ignore Muestra el nombre de usuario de Twitter.
     if (result.additionalUserInfo.username && result.additionalUserInfo.username.trim() !== "") {
       twitter.value = result.additionalUserInfo.username;
+      // Guarda el nombre de usuario de Twitter en el almacenamiento local.
+      localStorage.setItem('twitterUsername', result.additionalUserInfo.username);
     } else {
       // Si el nombre de usuario de Twitter es undefined o está vacío, vuelve a llamar a la autenticación de Twitter.
       auth.currentUser.linkWithRedirect(providerTwitter);
@@ -60,6 +62,32 @@ auth.getRedirectResult().then((result) => {
   var credential = error.credential;
   // ...
 });
+
+auth.onAuthStateChanged(
+  /** Recibe las características del usuario o null si no ha iniciado
+   * sesión. */
+  usuarioAuth => {
+    if (usuarioAuth && usuarioAuth.email) {
+      // Usuario aceptado.
+      // @ts-ignore Muestra el email registrado en Google.
+      email.value = usuarioAuth.email;
+      // @ts-ignore Muestra el nombre registrado en Google.
+      nombre.value = usuarioAuth.displayName;
+      // @ts-ignore Muestra el avatar registrado en Google.
+      avatar.src = usuarioAuth.photoURL;
+      // Recupera el nombre de usuario de Twitter del almacenamiento local.
+      twitter.value = localStorage.getItem('twitterUsername');
+      // Vincula la cuenta de Twitter con la de Google.
+      auth.currentUser.linkWithRedirect(providerTwitter);
+    } else {
+      // No ha iniciado sesión. Pide datos para iniciar sesión.
+      auth.signInWithRedirect(provider);
+    }
+  },
+  // Función que se invoca si hay un error al verificar el usuario.
+  procesaError
+);
+
 
 /** Termina la sesión. */
 async function terminaSesión() {
